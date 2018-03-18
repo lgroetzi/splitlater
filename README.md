@@ -106,10 +106,10 @@ You can find the most recent version of this guide [here](https://github.com/fac
 
 ## Project Notes
 
-#v0 Release
+###v0 Release
 * Mark payments as Split or Leave
 
-#Later releases
+###Later releases
 * Add cash payments to split
 * Login
 * Split by custom percentage
