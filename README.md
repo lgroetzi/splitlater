@@ -5,6 +5,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 
 ## Table of Contents
 
+- [Project Notes](#project-notes)
 - [Updating to New Releases](#updating-to-new-releases)
 - [Sending Feedback](#sending-feedback)
 - [Folder Structure](#folder-structure)
@@ -102,6 +103,18 @@ You can find the most recent version of this guide [here](https://github.com/fac
   - [Moment.js locales are missing](#momentjs-locales-are-missing)
 - [Alternatives to Ejecting](#alternatives-to-ejecting)
 - [Something Missing?](#something-missing)
+
+## Project Notes
+
+#v0 Release
+* Mark payments as Split or Leave
+
+#Later releases
+* Add cash payments to split
+* Login
+* Split by custom percentage
+* Verify list of expenses to be split
+
 
 ## Updating to New Releases
 
