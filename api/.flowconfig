@@ -1,0 +1,7 @@
+[ignore]
+.*/node_modules/fbjs/.*
+.*/node_modules/graphql/.*
+.*/node_modules/.*[^e]\.json$
+.*/node_modules/.*\(lib\|test\).*\.json
+.*/dist
+.*/coverage
