@@ -1,10 +1,8 @@
 // @flow
 import Knex from 'knex';
 import knexfile from './knexfile';
-import { env } from '../config';
 
-const config = knexfile[env];
-const knex = Knex(config);
+const knex = Knex(knexfile);
 
 export type GetOrCreateProps = {
   table: string,

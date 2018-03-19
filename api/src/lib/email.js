@@ -1,4 +1,5 @@
 // @flow
+import config from 'config';
 import fs from 'fs';
 import path from 'path';
 import { promisify } from 'util';
@@ -7,7 +8,7 @@ import debug from 'debug';
 import Handlebars from 'handlebars';
 import nodemailer from 'nodemailer';
 
-import config, { env, isEnv } from '../config';
+import { env, isEnv } from './env';
 
 export const SITE_ADDRESS = 'info@co-lab.io';
 
@@ -44,7 +45,7 @@ export async function send(options: SendOptionsType): Promise<Object> {
   const { html, text } = await readEmailTemplate(template, vars);
   const tag = `${env}.${options.template}`;
   const headers = { 'X-Mailgun-Tag': tag, 'X-Mailgun-Dkim': 'yes' };
-  const mailgun = nodemailer.createTransport(config.nodemailer);
+  const mailgun = nodemailer.createTransport(config.get('nodemailer'));
   dbg('sending email to ', to, 'bcc', bcc, 'text', text);
   const emailOptions = {
     from: from || SITE_ADDRESS,

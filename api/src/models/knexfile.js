@@ -1,8 +1,4 @@
 // @flow
-import config from '../config/config.json';
+import config from 'config';
 
-module.exports = {
-  test: config.test.db,
-  development: config.development.db,
-  production: config.production.db,
-};
+module.exports = config.get('db');

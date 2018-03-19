@@ -1,7 +1,7 @@
 // @flow
+import config from 'config';
 import app from './app';
-import config from './config';
 
-app.listen(config.http_port);
-// eslint-disable-next-line no-console
-console.log(`Server listening on ${config.http_port}`);
+const port = config.get('http_port');
+app.listen(port);
+console.log(`Server listening on ${port}`); // eslint-disable-line no-console

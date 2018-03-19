@@ -1,9 +1,9 @@
 // @flow
+import config from 'config';
 import jsrsasign from 'jsrsasign';
 import type { $Request } from 'express';
 import type { UserType } from '../models/types';
 
-import config from '../config';
 import knex from '../models';
 import * as libvalidation from './validation';
 import * as libemail from './email';
@@ -39,7 +39,8 @@ export const newError = (m: string): AuthError => new AuthError(m);
  * @param {String} secret is the secret used to encrypt the
  *  token. Defaults to `config.auth.secret`.
  */
-export function createJWT(id: string, email: string, expiration: string, secret: string = config.auth.secret): string {
+export function createJWT(id: string, email: string, expiration: string,
+                          secret: string = config.get('auth.secret')): string {
   const now = jsrsasign.jws.IntDate.get('now');
   const header = JSON.stringify({ alg: TOKEN_ALGO, typ: 'JWT' });
   const payload = JSON.stringify({
@@ -53,7 +54,7 @@ export function createJWT(id: string, email: string, expiration: string, secret:
 }
 
 /** Parse JWT tokens and return the parsed JSON payload */
-export function parseJWT(token: string, secret: string = config.auth.secret): JWTPayload {
+export function parseJWT(token: string, secret: string = config.get('auth.secret')): JWTPayload {
   const encoded = token.split('.')[1];
   if (!encoded) {
     throw newError('Invalid Token');
@@ -72,7 +73,7 @@ export async function emailLoginLink(emailAddress: string): Object {
   const [user] = await knex('user').where({ email });
   if (!user) throw newError('User does not exist');
   const sessionToken = createJWT(user.id, email, EXPIRATION_SESSION);
-  const link = `${config.site_url}/signin?token=${sessionToken}`;
+  const link = `${config.get('site_url')}/signin?token=${sessionToken}`;
   await libemail.send({
     to: email,
     template: 'login',

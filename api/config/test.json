@@ -1,0 +1,28 @@
+{
+  "site_url": "http://localhost:8000",
+  "http_port": 8001,
+  "upload_dir": "/tmp",
+  "auth": {
+    "bcrypt_cost": 10,
+    "secret": "not secret",
+    "jwt_expiration": "1day"
+  },
+  "db": {
+    "client": "mysql",
+    "connection": "mysql://root:foo@127.0.0.1/splitlater_test",
+    "pool": { "min": 2, "max": 10 }
+  },
+  "nodemailer": {
+    "service": "",
+    "auth": {
+      "user": "",
+      "pass": ""
+    }
+  },
+  "plaid": {
+    "client_id": "",
+    "secret": "",
+    "public_key": "",
+    "env": "sandbox"
+  }
+}
