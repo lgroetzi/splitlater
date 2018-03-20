@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import logo from './splitter-logo.svg';
-import './App.css';
-import './grid.css';
+import { Button } from 'react-bootstrap';
+import { Grid } from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
 
 class App extends Component {
   render() {
@@ -11,7 +13,13 @@ class App extends Component {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
         </header>
-        <Purchase time="5hrs ago" business="Playa Bowls" price="$20.62" />
+        <Grid>
+          <Row className="show-grid">
+            <Col sm={10} md={8} smOffset={1} mdOffset={2}>
+              <Purchase time="5hrs ago" business="Playa Bowls" price="$20.62" />
+            </Col>
+          </Row>
+        </Grid>
       </div>
     );
   }
