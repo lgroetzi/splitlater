@@ -9,6 +9,7 @@ import Handlebars from 'handlebars';
 import nodemailer from 'nodemailer';
 
 import { env, isEnv } from './env';
+import * as libtemplate from './template';
 
 export const SITE_ADDRESS = 'info@co-lab.io';
 
@@ -28,9 +29,7 @@ type SendOptionsType = {
 export async function readTemplateIfExists(name: string, context: any): Promise<string> {
   const moduleDir = path.dirname((module: any).filename);
   const filePath = path.join(moduleDir, '..', '..', 'templates', 'email', name);
-  const source = await promisify(fs.readFile)(filePath);
-  const template = Handlebars.compile(source.toString());
-  return template(context);
+  return libtemplate.render(filePath, context);
 }
 
 export async function readEmailTemplate(name: string, context: any): Promise<{ text: string, html: string }> {
