@@ -39,8 +39,10 @@ export const newError = (m: string): AuthError => new AuthError(m);
  * @param {String} secret is the secret used to encrypt the
  *  token. Defaults to `config.auth.secret`.
  */
-export function createJWT(id: string, email: string, expiration: string,
-                          secret: string = config.get('auth.secret')): string {
+export function createJWT(
+  id: string, email: string, expiration: string,
+  secret: string = config.get('auth.secret')): string
+{
   const now = jsrsasign.jws.IntDate.get('now');
   const header = JSON.stringify({ alg: TOKEN_ALGO, typ: 'JWT' });
   const payload = JSON.stringify({
