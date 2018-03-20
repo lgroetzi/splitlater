@@ -9,12 +9,19 @@ body {
   font-weight: 500;
 }
 
-button{
+button {
   background-color: #70DA91;
   border-radius: 25px;
   padding: 20px;
   box-shadow: none;
   border: none;
+}
+
+button:focus {
+  outline:none
+}
+button:active, button:hover {
+  background-color: #62BD7B;
 }
 
 .App {
@@ -50,7 +57,8 @@ button{
 
 .Purchase {
   background-color: white;
-  padding: 1%;
+  padding: 2% 3%;
+  text-align: left;
 }
 
 .Purchase p {

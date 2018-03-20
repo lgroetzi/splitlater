@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import logo from './splitter-logo.svg';
+import './App.css';
 import { Button } from 'react-bootstrap';
 import { Grid } from 'react-bootstrap';
 import { Col } from 'react-bootstrap';
@@ -28,12 +29,16 @@ class App extends Component {
 function Purchase(props) {
   return (
     <div className="Purchase">
-      <p>
-        <div className="caption">{props.time}</div>
-        <h1 className="h1">{props.business}</h1>
-        <div className="price">{props.price}</div>
-      </p>
-      <button></button>
+      <Row>
+        <div className="col-md-12">
+          <p className="pull-left">
+            <div className="caption">{props.time}</div>
+            <h1 className="h1">{props.business}</h1>
+            <div className="price">{props.price}</div>
+          </p>
+          <button className="pull-right"></button>
+        </div>
+      </Row>
     </div>
   );
 }
