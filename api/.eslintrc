@@ -21,6 +21,7 @@
     "flow-vars/use-flow-type": 1,
     "import/prefer-default-export": "off",
     "object-curly-newline": "off",
-    "function-paren-newline": "off"
+    "function-paren-newline": "off",
+    "brace-style": "off"
   }
 }
