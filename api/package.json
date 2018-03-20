@@ -8,7 +8,7 @@
   "license": "AGPL-3.0",
   "scripts": {
     "dev": "nodemon src/index.js -x babel-node . -e js",
-    "test": "eslint . && flow check $* && jest --coverage tests",
+    "test": "eslint . && flow check $* && jest",
     "clean": "rm -rf coverage dist tmp",
     "dist": "babel src -d dist",
     "start": "node dist/index.js",
