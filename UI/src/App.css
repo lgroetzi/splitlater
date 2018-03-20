@@ -1,8 +1,20 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   background-color: #ECF3F5;
   color: #4B5960;
   font-family: "Avenir", san-serif;
   font-weight: 500;
+}
+
+button{
+  background-color: #70DA91;
+  border-radius: 25px;
+  padding: 20px;
+  box-shadow: none;
+  border: none;
 }
 
 .App {
@@ -36,10 +48,13 @@ body {
   margin-bottom: 5px;
 }
 
-.cell {
+.Purchase {
   background-color: white;
-  margin: 0 6%;
   padding: 1%;
+}
+
+.Purchase p {
+  margin-bottom: 10px;
 }
 
 @keyframes App-logo-spin {
