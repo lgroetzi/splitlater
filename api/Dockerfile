@@ -11,4 +11,3 @@ RUN npm install yarn
 RUN yarn
 
 COPY . /usr/src/app
-COPY ./src/config/config.json /usr/src/app/dist/config/
