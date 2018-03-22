@@ -12,8 +12,9 @@
     "clean": "rm -rf coverage dist tmp",
     "dist": "babel src -d dist",
     "start": "node dist/index.js",
-    "db:knex": "babel-node ./node_modules/.bin/knex $*",
-    "db:migrate": "babel-node ./node_modules/.bin/knex migrate:latest --cwd ./src/models"
+    "db:knex": "NODE_CONFIG_DIR=$(pwd)/config babel-node ./node_modules/.bin/knex --cwd ./src/models $*",
+    "db:migrate": "NODE_CONFIG_DIR=$(pwd)/config babel-node ./node_modules/.bin/knex migrate:latest --cwd ./src/models",
+    "db:rollback": "NODE_CONFIG_DIR=$(pwd)/config babel-node ./node_modules/.bin/knex migrate:rollback --cwd ./src/models"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.40",
