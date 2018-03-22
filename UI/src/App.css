@@ -7,6 +7,7 @@ body {
   color: #4B5960;
   font-family: "Avenir", san-serif;
   font-weight: 500;
+  text-align: center;
 }
 
 button {
@@ -20,12 +21,9 @@ button {
 button:focus {
   outline:none
 }
+
 button:active, button:hover {
   background-color: #62BD7B;
-}
-
-.App {
-  text-align: center;
 }
 
 .App-header {
