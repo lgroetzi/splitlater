@@ -12,7 +12,7 @@ function Purchase(props) {
             <h1 className="h1">{props.business}</h1>
             <div className="price">{props.price}</div>
           </p>
-          <button className="pull-right"></button>
+          <button className="pull-right round-btn"></button>
         </div>
       </Row>
     </div>
