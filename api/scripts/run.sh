@@ -6,4 +6,5 @@ SCRIPTPATH="$(dirname $(readlink -f "$0"))"
 
 ${SCRIPTPATH}/createdbs.sh
 
+cd $APP && npm run dist
 cd $APP && npm start
