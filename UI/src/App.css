@@ -5,8 +5,8 @@
 body {
   background-color: #ECF3F5;
   color: #4B5960;
-  font-family: "Avenir", san-serif;
-  font-weight: 500;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
   text-align: center;
 }
 
@@ -36,7 +36,7 @@ button:active, button:hover {
 }
 
 .h1 {
-  font-weight: 900;
+  font-weight: 700;
   font-size: 18px;
   margin: 0;
 }
