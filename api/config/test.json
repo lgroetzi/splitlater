@@ -8,8 +8,9 @@
     "jwt_expiration": "1day"
   },
   "db": {
-    "client": "mysql",
-    "connection": "mysql://root:foo@127.0.0.1/splitlater_test",
+    "client": "postgres",
+    "connection": "postgres://splitlater:passwd@127.0.0.1:15432/splitlater_test",
+    "maintainance_conn": "postgres://postgres:foo@127.0.0.1:15432/postgres",
     "pool": { "min": 2, "max": 10 }
   },
   "nodemailer": {

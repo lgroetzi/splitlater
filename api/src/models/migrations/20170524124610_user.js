@@ -2,14 +2,15 @@
 
 export const up = async (knex: any) => Promise.all([
   await knex.schema.createTable('user', (table) => {
-    table.uuid('id').primary();
-    table.string('email').notNullable().unique();
+    table
+      .uuid('id')
+      .unique()
+      .defaultTo(knex.raw('public.gen_random_uuid()'))
+    table
+      .string('email')
+      .notNullable()
+      .unique();
   }),
-  await knex.raw(`
-    CREATE TRIGGER before_insert_user
-      BEFORE INSERT ON user
-      FOR EACH ROW
-      SET new.id = uuid();`),
 ]);
 
 

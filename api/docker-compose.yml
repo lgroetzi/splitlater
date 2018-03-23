@@ -1,19 +1,19 @@
 version: '3'
 services:
-  mysql:
-    image: mysql
+  postgres:
+    image: postgres
     environment:
-      MYSQL_ROOT_PASSWORD: foo
+      POSTGRES_PASSWORD: foo
     ports:
-      - "3306:3306"
+      - "15432:5432"
   web:
     build: .
-    command: "/usr/src/app/scripts/run.sh"
+    command: npm start
     environment:
       NODE_ENV: "docker"
     links:
-      - mysql:mysql
+      - postgres:postgres
     ports:
       - "8001:8001"
     depends_on:
-      - mysql
+      - postgres

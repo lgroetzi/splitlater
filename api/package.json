@@ -11,7 +11,9 @@
     "test": "eslint . && flow check $* && jest",
     "clean": "rm -rf coverage dist tmp",
     "dist": "babel src -d dist",
+    "prestart": "npm run dist",
     "start": "node dist/index.js",
+    "db:setup": "babel-node ./scripts/databasesetup.js",
     "db:knex": "NODE_CONFIG_DIR=$(pwd)/config babel-node ./node_modules/.bin/knex --cwd ./src/models $*",
     "db:migrate": "NODE_CONFIG_DIR=$(pwd)/config babel-node ./node_modules/.bin/knex migrate:latest --cwd ./src/models",
     "db:rollback": "NODE_CONFIG_DIR=$(pwd)/config babel-node ./node_modules/.bin/knex migrate:rollback --cwd ./src/models"
@@ -70,8 +72,9 @@
     "moment": "^2.21.0",
     "morgan": "^1.9.0",
     "multer": "^1.3.0",
-    "mysql": "^2.15.0",
     "nodemailer": "^4.5.0",
+    "pg": "^7.4.1",
+    "pg-format": "^1.0.4",
     "plaid": "^2.3.1"
   }
 }
