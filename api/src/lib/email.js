@@ -1,11 +1,8 @@
 // @flow
 import config from 'config';
-import fs from 'fs';
 import path from 'path';
-import { promisify } from 'util';
 
 import debug from 'debug';
-import Handlebars from 'handlebars';
 import nodemailer from 'nodemailer';
 
 import { env, isEnv } from './env';

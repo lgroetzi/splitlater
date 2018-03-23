@@ -49,12 +49,12 @@ async function createDatabase(client: pg.Client, database: string, owner: string
 }
 
 /** Create postgres extensions */
-async function createExtensions(client: pg.Client) {
+async function createExtensions(client: pg.Client): Promise {
   await client.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');
   await client.query('CREATE EXTENSION IF NOT EXISTS pgcrypto');
 }
 
-function replaceDatabase(url, newDatabase) {
+function replaceDatabase(url: string, newDatabase: string): string {
   const obj = new URL(url);
   obj.pathname = `/${newDatabase}`;
   return obj.toString();
@@ -73,7 +73,7 @@ async function main(): Promise {
 
   /* Connect with maintainance to the recently created database */
   const newUrl = replaceDatabase(config.db.maintainance_conn, database);
-  const clientOtherDb = getConnectedClient(newUrl)
+  const clientOtherDb = getConnectedClient(newUrl);
   await createExtensions(clientOtherDb);
   await clientOtherDb.end();
 }

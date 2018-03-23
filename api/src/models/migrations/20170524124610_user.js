@@ -5,7 +5,7 @@ export const up = async (knex: any) => Promise.all([
     table
       .uuid('id')
       .unique()
-      .defaultTo(knex.raw('public.gen_random_uuid()'))
+      .defaultTo(knex.raw('public.gen_random_uuid()'));
     table
       .string('email')
       .notNullable()
