@@ -13,6 +13,7 @@
     "dist": "babel src -d dist",
     "prestart": "npm run dist",
     "start": "node dist/index.js",
+    "docker:run": "npm run db:setup && npm run db:migrate && npm start",
     "db:setup": "babel-node ./scripts/databasesetup.js",
     "db:knex": "NODE_CONFIG_DIR=$(pwd)/config babel-node ./node_modules/.bin/knex --cwd ./src/models $*",
     "db:migrate": "NODE_CONFIG_DIR=$(pwd)/config babel-node ./node_modules/.bin/knex migrate:latest --cwd ./src/models",

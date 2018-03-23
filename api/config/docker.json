@@ -10,7 +10,7 @@
   },
   "db": {
     "client": "postgres",
-    "connection": "postgres://splitlater:pwd@postgres/splitlater_docker",
+    "connection": "postgres://splitlater:passwd@postgres/splitlater_docker",
     "maintainance_conn": "postgres://postgres:foo@postgres/postgres",
     "pool": { "min": 2, "max": 10 }
   },
