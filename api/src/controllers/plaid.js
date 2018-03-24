@@ -3,52 +3,36 @@ import config from 'config';
 import moment from 'moment';
 import type { $Request, $Response } from 'express';
 
-import { handleError } from '../lib/http';
+import * as libvalidation from '../lib/validation';
 import * as libtemplate from '../lib/template';
 import * as libplaid from '../lib/plaid';
 
-var ACCESS_TOKEN = null;
-var PUBLIC_TOKEN = null;
-var ITEM_ID = null;
+const ACCESS_TOKEN = null;
 
 export async function account(req: $Request, res: $Response): mixed {
-  try {
-    const context = {
-      plaid_env: config.get('plaid.env'),
-      plaid_public_key: config.get('plaid.public_key'),
-    };
-    const template = new Buffer(await libtemplate.byName('plaid', context));
-    res.set('content-type', 'text/html');
-    res.status(200).send(template);
-  } catch (error) {
-    res.sendStatus(handleError(error));
-  }
+  const context = {
+    plaid_env: config.get('plaid.env'),
+    plaid_public_key: config.get('plaid.public_key'),
+  };
+  const template = Buffer.from(await libtemplate.byName('plaid', context));
+  res.set('content-type', 'text/html');
+  res.status(200).send(template);
 }
 
 export async function getAccessToken(req: $Request, res: $Response): mixed {
-  console.log(`Acquiring Access Token:`);
-  console.log(req.body);
   try {
-    const { access_token, item_id } = await libplaid.exchangePublicToken(req.body.public_token);
-
+    const { access_token, item_id } = await libplaid.exchangePublicToken(req.body.publicToken);
     ACCESS_TOKEN = access_token;
-    ITEM_ID = item_id;
-
-    console.log('Access Token: ' + ACCESS_TOKEN);
-    console.log('Item ID: ' + ITEM_ID);
-
-    return res.json({ 'error': false });
+    return res.json({ error: false });
   } catch (error) {
-    const msg = 'Could not exchange public_token!';
-    console.log(msg + '\n');
     console.log(error);
-    return res.json({ error: msg });
+    return res.json({ error: 'Could not exchange public_token!' });
   }
 }
 
 export async function transactions(req: $Request, res: $Response): mixed {
-  var startDate = moment().subtract(30, 'days').format('YYYY-MM-DD');
-  var endDate = moment().format('YYYY-MM-DD');
+  const startDate = moment().subtract(30, 'days').format('YYYY-MM-DD');
+  const endDate = moment().format('YYYY-MM-DD');
   try {
     console.log('TOKEN', ACCESS_TOKEN);
     const transactionsResponse = await libplaid.getTransactions(ACCESS_TOKEN, startDate, endDate, {

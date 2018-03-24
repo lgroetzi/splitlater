@@ -1990,6 +1990,10 @@ expect@^22.4.0:
     jest-message-util "^22.4.0"
     jest-regex-util "^22.1.0"
 
+express-async-errors@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/express-async-errors/-/express-async-errors-2.1.2.tgz#a5692a0763904109f27d9649b4f827cf89100f53"
+
 express-graphql@^0.6.12:
   version "0.6.12"
   resolved "https://registry.yarnpkg.com/express-graphql/-/express-graphql-0.6.12.tgz#dfcb2058ca72ed5190b140830ad8cdbf76a9128a"
