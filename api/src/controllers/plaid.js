@@ -3,13 +3,14 @@ import config from 'config';
 import moment from 'moment';
 import type { $Request, $Response } from 'express';
 
+import * as libauth from '../lib/auth';
 import * as libvalidation from '../lib/validation';
 import * as libtemplate from '../lib/template';
 import * as libplaid from '../lib/plaid';
+import * as libstores from '../lib/stores';
 
-const ACCESS_TOKEN = null;
 
-export async function account(req: $Request, res: $Response): mixed {
+export async function account(req: $Request, res: $Response): Promise<mixed> {
   const context = {
     plaid_env: config.get('plaid.env'),
     plaid_public_key: config.get('plaid.public_key'),
@@ -19,50 +20,23 @@ export async function account(req: $Request, res: $Response): mixed {
   res.status(200).send(template);
 }
 
-export async function getAccessToken(req: $Request, res: $Response): mixed {
-  try {
-    const { access_token, item_id } = await libplaid.exchangePublicToken(req.body.publicToken);
-    ACCESS_TOKEN = access_token;
-    return res.json({ error: false });
-  } catch (error) {
-    console.log(error);
-    return res.json({ error: 'Could not exchange public_token!' });
-  }
+/** Exchange the public token received by the Plaid's Link button */
+export async function token(req: $Request, res: $Response): Promise<*> {
+  if (!req.body.publicToken) throw libvalidation.newError('Token missing');
+  const result = await libplaid.exchangePublicToken(req.body.publicToken);
+  const user = await libauth.userFromReq(req);
+  await libstores.createService(user, 'plaid', { token: result.access_token });
+  return res.sendStatus(200);
 }
 
-export async function transactions(req: $Request, res: $Response): mixed {
+/** List transactions from Plaid */
+export async function transactions(req: $Request, res: $Response): Promise {
   const startDate = moment().subtract(30, 'days').format('YYYY-MM-DD');
   const endDate = moment().format('YYYY-MM-DD');
-  try {
-    console.log('TOKEN', ACCESS_TOKEN);
-    const transactionsResponse = await libplaid.getTransactions(ACCESS_TOKEN, startDate, endDate, {
-      count: 250,
-      offset: 0,
-    });
-    console.log('pulled ' + transactionsResponse.transactions.length + ' transactions');
-    res.json(transactionsResponse);
-  } catch (error) {
-    console.log(JSON.stringify(error));
-    return res.json({ error: error });
-  }
+  // const transactionsResponse = await libplaid.getTransactions(ACCESS_TOKEN, startDate, endDate, {
+  //   count: 250,
+  //   offset: 0,
+  // });
+  // console.log(`pulled ${transactionsResponse.transactions.length} transactions`);
+  // res.json(transactionsResponse);
 }
-
-/* app.post('/get_access_token', function(request, response, next) {
- *   PUBLIC_TOKEN = request.body.public_token;
- *   client.exchangePublicToken(PUBLIC_TOKEN, function(error, tokenResponse) {
- *     if (error != null) {
- *       var msg = 'Could not exchange public_token!';
- *       console.log(msg + '\n' + error);
- *       return response.json({
- *         error: msg
- *       });
- *     }
- *     ACCESS_TOKEN = tokenResponse.access_token;
- *     ITEM_ID = tokenResponse.item_id;
- *     console.log('Access Token: ' + ACCESS_TOKEN);
- *     console.log('Item ID: ' + ITEM_ID);
- *     response.json({
- *       'error': false
- *     });
- *   });
- * });*/
