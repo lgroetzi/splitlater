@@ -9,7 +9,7 @@ const client = new plaid.Client(
   plaid.environments[config.get('plaid.env')],
 );
 
-export function exchangePublicToken(token: String): Promise<string> {
+export async function exchangePublicToken(token: string): Promise<string> {
   return client.exchangePublicToken(token);
 }
 

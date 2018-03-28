@@ -26,7 +26,7 @@ function getConnectedClient(url: string): pg.Client {
 }
 
 /** Create a user in postgres if it doesn't exist */
-async function createUser(client: pg.Client, name: string, password: string): Promise {
+async function createUser(client: pg.Client, name: string, password: string): Promise<void> {
   const exists = await client.query(
     'SELECT 1 FROM pg_roles WHERE rolname=$1', [name]);
   if (exists.rowCount === 0) {
@@ -38,7 +38,7 @@ async function createUser(client: pg.Client, name: string, password: string): Pr
 }
 
 /** Create a database and set its owner */
-async function createDatabase(client: pg.Client, database: string, owner: string): Promise {
+async function createDatabase(client: pg.Client, database: string, owner: string): Promise<void> {
   const exists = await client.query(
     'SELECT 1 FROM pg_database WHERE datname=$1', [database]);
   if (exists.rowCount === 0) {
@@ -49,7 +49,7 @@ async function createDatabase(client: pg.Client, database: string, owner: string
 }
 
 /** Create postgres extensions */
-async function createExtensions(client: pg.Client): Promise {
+async function createExtensions(client: pg.Client): Promise<void> {
   await client.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');
   await client.query('CREATE EXTENSION IF NOT EXISTS pgcrypto');
 }
@@ -61,7 +61,7 @@ function replaceDatabase(url: string, newDatabase: string): string {
 }
 
 /** Kick things off */
-async function main(): Promise {
+async function main(): Promise<void> {
   const url = new URL(config.db.connection);
   const database = url.pathname.slice(1);
 
