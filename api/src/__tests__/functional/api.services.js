@@ -12,56 +12,54 @@ import * as libstores from '../../lib/stores';
 
 afterAll(() => knex.destroy());
 
-describe('POST /service/plaid', () => {
+describe('/service API', () => {
+  let libplaidExchangePublicTokenStub;
+
   beforeEach(async () => {
     await knexCleaner.clean(knex);
+    libplaidExchangePublicTokenStub = sinon
+      .stub(libplaid, 'exchangePublicToken')
+      .callsFake(() => new Promise((resolve) => resolve({
+        access_token: 'PRIV TOKEN'
+      })));
   });
 
-  describe('/token when the user links a plaid account and exchanges public tokens', () => {
+  afterEach(() => {
+    libplaidExchangePublicTokenStub.restore();
+  });
+
+  describe('POST /service/plaid/token', () => {
     it('should error if there is no data in the request', async () => {
       // Given a user and an API authentication token
       const user = await libstores.createUser({ email: 'uzer@zerver.co' });
       const token = libauth.createJWT(user.id, user.email, libauth.EXPIRATION_LOGIN);
 
-      // When POST doesn't contain any data
-      const { statusCode } = await supertest(app)
+      // When POST doesn't contain any data; Then it should yield
+      // BadRequest
+      await supertest(app)
         .post('/service/plaid/token')
         .set('Authorization', `bearer ${token}`)
-        .send({});
-
-      // Then it should yield BadRequest
-      expect(statusCode).toBe(400);
+        .send({})
+        .expect(400);
     });
 
-    describe('/token Store successfuly exchanged token in the @database', () => {
-      let libplaidStub;
-      beforeEach(async () => {
-        libplaidStub = sinon
-          .stub(libplaid, 'exchangePublicToken')
-          .callsFake(() => new Promise((resolve) => resolve({ access_token: 'PRIV TOKEN' })));
-      });
+    it('Should save token within service data', async () => {
+      // Given a user and an API authentication token
+      const user = await libstores.createUser({ email: 'uzer@zerver.co' });
+      const token = libauth.createJWT(user.id, user.email, libauth.EXPIRATION_LOGIN);
 
-      afterEach(() => libplaidStub.restore());
+      // When POST doesn't contain any data; Then it should yield
+      // BadRequest
+      await supertest(app)
+        .post('/service/plaid/token')
+        .set('Authorization', `bearer ${token}`)
+        .send({ publicToken: 'public token' })
+        .expect(200);
 
-      it('Should save ', async () => {
-        // Given a user and an API authentication token
-        const user = await libstores.createUser({ email: 'uzer@zerver.co' });
-        const token = libauth.createJWT(user.id, user.email, libauth.EXPIRATION_LOGIN);
-
-        // When POST doesn't contain any data
-        const { statusCode } = await supertest(app)
-          .post('/service/plaid/token')
-          .set('Authorization', `bearer ${token}`)
-          .send({ publicToken: 'public token' });
-
-        // Then it should yield BadRequest
-        expect(statusCode).toBe(200);
-
-        // And Then the token is actually saved within the database
-        const [service] = await knex('service');
-        expect(service.name).toBe('plaid');
-        expect(service.data.token).toBe('PRIV TOKEN');
-      });
+      // And Then the token is actually saved within the database
+      const [service] = await knex('service');
+      expect(service.name).toBe('plaid');
+      expect(service.data.token).toBe('PRIV TOKEN');
     });
-  });
-});
+  });  /* "POST /service/plaid/token" */
+});  /* "Methods under /service[s]" */
