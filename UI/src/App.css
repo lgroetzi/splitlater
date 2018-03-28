@@ -17,6 +17,7 @@ button {
   border: none;
   color: #fff;
   font-size: 18px;
+  width: 100%;
 }
 
 form button {
@@ -46,7 +47,7 @@ input {
   color: #A0A3BC;
 }
 
-.login h1 {
+.onboarding h1 {
   margin: 50px 0 30px;
   font-size: 22px;
 }

@@ -8,12 +8,14 @@ import logo from './splitter-logo.svg';
 
 import NotFound from './pages/NotFound';
 import Login from './pages/Login.js';
+import Plaid from './pages/Plaid.js';
 import Home from './pages/Home.js';
 
 const Routes = () => (
   <Switch>
     <Route path="/" exact component={Home} />
     <Route path="/login" component={Login} />
+    <Route path="/plaid" component={Plaid} />
     <Route component={NotFound} />
   </Switch>
 );
