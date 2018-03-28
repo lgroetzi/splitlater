@@ -1,6 +1,5 @@
 // @flow
 import config from 'config';
-import moment from 'moment';
 import type { $Request, $Response } from 'express';
 
 import * as libauth from '../lib/auth';
@@ -28,16 +27,4 @@ export async function token(req: $Request, res: $Response): Promise<*> {
   const user = await libauth.userFromReq(req);
   await libstores.createService(user, 'plaid', { token: result.access_token });
   return res.sendStatus(200);
-}
-
-/** List transactions from Plaid */
-export async function transactions(req: $Request, res: $Response): Promise<*> {
-  const startDate = moment().subtract(30, 'days').format('YYYY-MM-DD');
-  const endDate = moment().format('YYYY-MM-DD');
-  // const transactionsResponse = await libplaid.getTransactions(ACCESS_TOKEN, startDate, endDate, {
-  //   count: 250,
-  //   offset: 0,
-  // });
-  // console.log(`pulled ${transactionsResponse.transactions.length} transactions`);
-  // res.json(transactionsResponse);
 }
