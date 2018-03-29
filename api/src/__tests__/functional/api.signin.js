@@ -73,6 +73,29 @@ describe('POST /signin - Endpoint to Sign-In users', () => {
         // Then it should send the user an email
         libemailMock.verify();
       });
+
+      it('GET /signin?email=??? should work if the user exists', async () => {
+        // Given a user in the database
+        const email = 'foo@blah.com';
+        await knex('user').insert({ email });
+
+        // And given that we set some expectations for the libemail mock
+        libemailMock.expects('send').once().withArgs({
+          to: 'foo@blah.com',
+          subject: 'Signin',
+          template: 'login',
+          vars: { link: 'http://localhost:8000/signin?token=TOKEN' },
+        });
+
+        // When a login attempt happens with that user
+        const { statusCode } = await supertest(app).get(`/signin?email=${email}`);
+
+        // Then the response code should be 200
+        expect(statusCode).toBe(200);
+
+        // Then it should send the user an email
+        libemailMock.verify();
+      });
     });
   });
 });
