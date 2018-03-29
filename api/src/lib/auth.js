@@ -74,7 +74,7 @@ export async function emailLoginLink(emailAddress: string): Object {
   const email = libvalidation.isEmail(emailAddress);
   const [user] = await knex('user').where({ email });
   if (!user) throw newError('User does not exist');
-  const sessionToken = createJWT(user.id, email, EXPIRATION_SESSION);
+  const sessionToken = createJWT(user.id, email, EXPIRATION_LOGIN);
   const link = `${config.get('site_url')}/signin?token=${sessionToken}`;
   await libemail.send({
     to: email,
