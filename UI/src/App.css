@@ -47,6 +47,11 @@ input {
   color: #A0A3BC;
 }
 
+.plaid-logo {
+  width:20px;
+  margin: 10px 10px;
+}
+
 .onboarding h1 {
   margin: 50px 0 30px;
   font-size: 22px;

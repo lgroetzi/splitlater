@@ -1,5 +1,5 @@
 {
-  "site_url": "http://localhost:8000",
+  "site_url": "http://localhost:3000",
   "http_port": 8001,
   "upload_dir": "/tmp",
   "auth": {
