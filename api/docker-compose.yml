@@ -11,6 +11,7 @@ services:
     command: npm run docker:run
     environment:
       NODE_ENV: "docker"
+      DEBUG: "email"
     links:
       - postgres:postgres
     ports:
