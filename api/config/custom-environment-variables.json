@@ -1,0 +1,15 @@
+{
+  "site_url": "SITE_URL",
+  "nodemailer": {
+    "service": "NODEMAILER_SERVICE",
+    "auth": {
+      "user": "NODEMAILER_USER",
+      "pass": "NODEMAILER_PASS"
+    }
+  },
+  "plaid": {
+    "client_id": "PLAID_CLIENT_ID",
+    "secret": "PLAID_SECRET_ID",
+    "public_key": "PLAID_PUBLIC_KEY"
+  }
+}
