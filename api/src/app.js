@@ -15,26 +15,20 @@ import { handleError } from './middleware/error';
 
 const app = express();
 
+/* Configuration */
 app.use(morgan('combined'));
 app.use(bodyParser.json());
 app.use(cors({ origin: config.get('site_url'), optionsSuccessStatus: 200 }));
-app.use(checkAuth({ except: ['/signin'] }));
+app.use(checkAuth({ priv: [/^\/api\/[^(signin)]+/] }));
+app.use('/', express.static('../UI/build'));
 
-/* Authentication */
-app.post('/signin', authControllers.signin);
-app.get('/signin', authControllers.signin);
+/* API */
+app.post('/api/signin', authControllers.signin);
+app.get('/api/signin', authControllers.signin);
+app.get('/api/transactions', transactionControllers.transactions);
+app.post('/api/service/plaid/token', plaidControllers.token);
 
-/* Transactions */
-app.get('/transactions', transactionControllers.transactions);
-
-/* Services */
-app.post('/service/plaid/token', plaidControllers.token);
-
-/* Temporary */
-app.set('views', '../templates/views');
-app.set('view engine', 'handlebars');
-app.get('/account', plaidControllers.account);
-
+/* Error handling */
 app.use(handleError);
 
 export default app;

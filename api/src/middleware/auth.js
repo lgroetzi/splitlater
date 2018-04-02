@@ -2,9 +2,10 @@
 import type { $Request, $Response } from 'express';
 import * as auth from '../lib/auth';
 
-export function checkAuth({ except }: { except: Array<string> }): Function {
+export function checkAuth({ priv }: { except: Array<string> }): Function {
   return (req: $Request, res: $Response, next: Function) => {
-    if (except.indexOf(req.path) === -1) {
+    const matches = priv.map((e) => e.test(req.path)).filter((x) => x);
+    if (matches.length > 0) {
       // No authorization header leads to direct authorization failure
       if (req.headers && req.headers.authorization === undefined) {
         res.sendStatus(401);
