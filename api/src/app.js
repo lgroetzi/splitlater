@@ -19,7 +19,7 @@ const app = express();
 app.use(morgan('combined'));
 app.use(bodyParser.json());
 app.use(cors({ origin: config.get('site_url'), optionsSuccessStatus: 200 }));
-app.use(checkAuth({ priv: [/^\/api\/[^(signin)]+/] }));
+app.use(checkAuth({ allow: [/^\/?$/, /^\/api\/signin\/?/] }));
 app.use('/', express.static('../UI/build'));
 
 /* API */
