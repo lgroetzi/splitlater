@@ -2,7 +2,7 @@
 import type { $Request, $Response } from 'express';
 import * as auth from '../lib/auth';
 
-export function checkAuth({ allow }: { except: Array<string> }): Function {
+export function checkAuth({ allow }: { allow: Array<RegExp> }): Function {
   return (req: $Request, res: $Response, next: Function) => {
     const matches = allow.map((e) => e.test(req.path)).filter((x) => x);
     if (matches.length < 1) {

@@ -13,7 +13,8 @@ import * as libstores from '../../lib/stores';
 afterAll(() => knex.destroy());
 
 describe('/service API', () => {
-  let libplaidExchangePublicTokenStub, libplaidGetTransactionsStub;
+  let libplaidExchangePublicTokenStub;
+  let libplaidGetTransactionsStub;
 
   beforeEach(async () => {
     await knexCleaner.clean(knex);
@@ -21,12 +22,12 @@ describe('/service API', () => {
     libplaidExchangePublicTokenStub = sinon
       .stub(libplaid, 'exchangePublicToken')
       .callsFake(() => new Promise((resolve) => resolve({
-        access_token: 'PRIV TOKEN'
+        access_token: 'PRIV TOKEN',
       })));
     libplaidGetTransactionsStub = sinon
       .stub(libplaid, 'getTransactions')
       .callsFake(() => new Promise((resolve) => resolve({
-        transactions: 'LOTS OF TRANSACTIONS'
+        transactions: 'LOTS OF TRANSACTIONS',
       })));
   });
 
@@ -68,7 +69,7 @@ describe('/service API', () => {
       expect(service.name).toBe('plaid');
       expect(service.data.token).toBe('PRIV TOKEN');
     });
-  });  /* "POST /service/plaid/token" */
+  }); /* "POST /service/plaid/token" */
 
   describe('GET /transactions with a plaid user', () => {
     it('should error if user does not have a service account', async () => {
@@ -78,7 +79,7 @@ describe('/service API', () => {
 
       // When GET doesn't contain any data; Then it should yield
       // BadRequest
-      const response = await supertest(app)
+      await supertest(app)
         .get('/transactions')
         .set('Authorization', `bearer ${token}`)
         .expect(400);
@@ -101,5 +102,5 @@ describe('/service API', () => {
       // Then it should contain the transaction
       expect(body.transactions).toBe('LOTS OF TRANSACTIONS');
     });
-  });  /* "POST /transactions with a plaid user" */
-});  /* "Methods under /service[s]" */
+  }); /* "POST /transactions with a plaid user" */
+}); /* "Methods under /service[s]" */

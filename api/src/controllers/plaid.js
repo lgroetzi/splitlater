@@ -23,13 +23,8 @@ export async function account(req: $Request, res: $Response): Promise<*> {
 export async function token(req: $Request, res: $Response): Promise<*> {
   const { publicToken } = req.body;
   if (!publicToken) throw libvalidation.newError('Token missing');
-  try {
-    const result = await libplaid.exchangePublicToken(publicToken);
-    const user = await libauth.userFromReq(req);
-    await libstores.createService(user, 'plaid', { token: result.access_token });
-    return res.sendStatus(200);
-  } catch (error) {
-    console.log(error);
-    return res.sendStatus(400);
-  }
+  const result = await libplaid.exchangePublicToken(publicToken);
+  const user = await libauth.userFromReq(req);
+  await libstores.createService(user, 'plaid', { token: result.access_token });
+  return res.sendStatus(200);
 }

@@ -1,5 +1,6 @@
 // @flow
 import moment from 'moment';
+import type { $Request, $Response } from 'express';
 
 import * as libauth from '../lib/auth';
 import * as libplaid from '../lib/plaid';

@@ -1,4 +1,5 @@
 // @flow
+import type { $Response } from 'express';
 import { AuthError } from '../lib/auth';
 import { ValidationError } from '../lib/validation';
 
@@ -27,7 +28,7 @@ export function handleError(
   error: Error,
   req: $Request,
   res: $Response,
-  next: Function) // eslint-disable-line no-unused-vars
+  next: Function): $Response // eslint-disable-line no-unused-vars
 {
   printError(error);
   return res.sendStatus({
