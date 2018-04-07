@@ -13,7 +13,7 @@ export async function signIn(email) {
     body: JSON.stringify({ email }),
   };
   return handleResponse(
-    await fetch('http://localhost:8001/signin', fetchOptions));
+    await fetch('http://localhost:8001/api/signin', fetchOptions));
 }
 
 export function isLoggedIn() {
