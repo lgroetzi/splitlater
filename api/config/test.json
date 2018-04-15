@@ -5,13 +5,16 @@
   "auth": {
     "bcrypt_cost": 10,
     "secret": "not secret",
-    "jwt_expiration": "1day"
+    "jwt_login_expiration": "5m",
+    "jwt_session_expiration": "1day"
   },
   "db": {
     "client": "postgres",
     "connection": "postgres://splitlater:passwd@127.0.0.1:15432/splitlater_test",
     "maintainance_conn": "postgres://postgres:foo@127.0.0.1:15432/postgres",
     "pool": { "min": 2, "max": 10 }
+  },
+  "keys": {
   },
   "nodemailer": {
     "service": "",
