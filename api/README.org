@@ -1,0 +1,32 @@
+* API Setup
+** Docker
+
+   If the system in question provides Docker & docker-compse, then the
+   whole thing can be executed with the following command:
+
+   #+begin_src sh
+   $ docker-compose up --build
+   #+end_src
+
+** No Docker
+
+   If the system doesn't provide Docker the installation is for
+   development of the API, than some steps are required to get things
+   running
+
+*** Install Dependencies
+    * PostgreSQL 9.6+
+    * NodeJS 8+
+
+*** Configure Database
+
+    #+begin_src sh
+    $ npm run db:setup
+    $ npm run db:migrate
+    #+end_src
+
+*** Run the API
+
+    #+begin_src sh
+    $ npm start
+    #+end_src
