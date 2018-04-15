@@ -12,7 +12,7 @@ import * as libstores from '../../lib/stores';
 
 afterAll(() => knex.destroy());
 
-describe('/service API', () => {
+describe('/api/service API', () => {
   let libplaidExchangePublicTokenStub;
   let libplaidGetTransactionsStub;
 
@@ -36,7 +36,7 @@ describe('/service API', () => {
     libplaidGetTransactionsStub.restore();
   });
 
-  describe('POST /service/plaid/token', () => {
+  describe('POST /api/service/plaid/token', () => {
     it('should error if there is no data in the request', async () => {
       // Given a user and an API authentication token
       const user = await libstores.createUser({ email: 'uzer@zerver.co' });
@@ -45,7 +45,7 @@ describe('/service API', () => {
       // When POST doesn't contain any data; Then it should yield
       // BadRequest
       await supertest(app)
-        .post('/service/plaid/token')
+        .post('/api/service/plaid/token')
         .set('Authorization', `bearer ${token}`)
         .send({})
         .expect(400);
@@ -59,7 +59,7 @@ describe('/service API', () => {
       // When POST doesn't contain any data; Then it should yield
       // BadRequest
       await supertest(app)
-        .post('/service/plaid/token')
+        .post('/api/service/plaid/token')
         .set('Authorization', `bearer ${token}`)
         .send({ publicToken: 'public token' })
         .expect(200);
@@ -69,9 +69,9 @@ describe('/service API', () => {
       expect(service.name).toBe('plaid');
       expect(service.data.token).toBe('PRIV TOKEN');
     });
-  }); /* "POST /service/plaid/token" */
+  }); /* "POST /api/service/plaid/token" */
 
-  describe('GET /transactions with a plaid user', () => {
+  describe('GET /api/transactions with a plaid user', () => {
     it('should error if user does not have a service account', async () => {
       // Given a user and an API authentication token
       const user = await libstores.createUser({ email: 'uzer@zerver.co' });
@@ -80,7 +80,7 @@ describe('/service API', () => {
       // When GET doesn't contain any data; Then it should yield
       // BadRequest
       await supertest(app)
-        .get('/transactions')
+        .get('/api/transactions')
         .set('Authorization', `bearer ${token}`)
         .expect(400);
     });
@@ -95,7 +95,7 @@ describe('/service API', () => {
 
       // When GET doesn't contain any data;
       const { body } = await supertest(app)
-        .get('/transactions')
+        .get('/api/transactions')
         .set('Authorization', `bearer ${token}`)
         .expect(200);
 
@@ -103,4 +103,4 @@ describe('/service API', () => {
       expect(body.transactions).toBe('LOTS OF TRANSACTIONS');
     });
   }); /* "POST /transactions with a plaid user" */
-}); /* "Methods under /service[s]" */
+}); /* "Methods under /api/service[s]" */

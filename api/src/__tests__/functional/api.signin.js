@@ -12,12 +12,12 @@ import * as libemail from '../../lib/email';
 
 afterAll(() => knex.destroy());
 
-describe('POST /signin - Endpoint to Sign-In users', () => {
+describe('POST /api/signin - Endpoint to Sign-In users', () => {
   describe('when user posts an email address', () => {
     it('should error if there is no data in the request', async () => {
       // When POST doesn't contain any data
       const { statusCode } = await supertest(app)
-        .post('/signin')
+        .post('/api/signin')
         .send({});
       // Then it should yield BadRequest
       expect(statusCode).toBe(400);
@@ -27,7 +27,7 @@ describe('POST /signin - Endpoint to Sign-In users', () => {
       // When POST request hits the signin endpoint with an email of a
       // user that doesn't exist in the database
       const { statusCode } = await supertest(app)
-        .post('/signin')
+        .post('/api/signin')
         .send({ email: 'whtevr@no.co' });
 
       // Then response status code should be 401
@@ -65,7 +65,7 @@ describe('POST /signin - Endpoint to Sign-In users', () => {
         });
 
         // When a login attempt happens with that user
-        const { statusCode } = await supertest(app).post('/signin').send({ email });
+        const { statusCode } = await supertest(app).post('/api/signin').send({ email });
 
         // Then the response code should be 200
         expect(statusCode).toBe(200);
@@ -74,7 +74,7 @@ describe('POST /signin - Endpoint to Sign-In users', () => {
         libemailMock.verify();
       });
 
-      it('GET /signin?email=??? should work if the user exists', async () => {
+      it('GET /api/signin?email=??? should work if the user exists', async () => {
         // Given a user in the database
         const email = 'foo@blah.com';
         await knex('user').insert({ email });
@@ -88,7 +88,7 @@ describe('POST /signin - Endpoint to Sign-In users', () => {
         });
 
         // When a login attempt happens with that user
-        const { statusCode } = await supertest(app).get(`/signin?email=${email}`);
+        const { statusCode } = await supertest(app).get(`/api/signin?email=${email}`);
 
         // Then the response code should be 200
         expect(statusCode).toBe(200);
@@ -100,12 +100,12 @@ describe('POST /signin - Endpoint to Sign-In users', () => {
   });
 });
 
-describe('GET /signin?token=TOK - Endpoint to Sign-In users', () => {
+describe('GET /api/signin?token=TOK - Endpoint to Sign-In users', () => {
   describe('when user posts a token', () => {
     it('should fail if token is invalid', async () => {
       // When user posts an invalid token to signin
       const { statusCode } = await supertest(app)
-        .get('/signin?token=foo');
+        .get('/api/signin?token=foo');
 
       // Then response status code should be 401
       expect(statusCode).toBe(401);
@@ -116,7 +116,7 @@ describe('GET /signin?token=TOK - Endpoint to Sign-In users', () => {
       const token = libauth.createJWT('uuid', 'foo@blah.com', '1hour');
 
       // When the valid token is posted to the signin url
-      const response = await supertest(app).get(`/signin?token=${token}`);
+      const response = await supertest(app).get(`/api/signin?token=${token}`);
 
       // Then the status code should represent success
       expect(response.statusCode).toBe(200);
