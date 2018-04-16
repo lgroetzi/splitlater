@@ -24,7 +24,7 @@ form button {
   width: 100%;
 }
 
-input {
+.input {
   width: 100%;
   padding: 20px;
   margin-bottom: 10px;
@@ -32,6 +32,7 @@ input {
   outline: 0;
   border: none;
   font-size: 18px;
+  height: 65px;
 }
 
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */

@@ -68,6 +68,7 @@ export default class Login extends React.Component {
 		        { !this.state.emailSent &&
 	      		<form onSubmit={this.onSubmit}> 						
 							<FormControl
+								className="input"
 								onChange={this.onEmailChange.bind(this)}
 								type="text"
 								placeholder="Email Address..."
