@@ -15,8 +15,9 @@ services:
     links:
       - postgres:postgres
     ports:
-      - "8001:8001"
+      - "8000:8000"
     depends_on:
       - postgres
     volumes:
       - ..:/usr/src/api
+      - ../../UI:/usr/src/UI

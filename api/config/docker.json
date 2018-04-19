@@ -1,6 +1,6 @@
 {
-  "site_url": "http://localhost:3000",
-  "http_port": 8001,
+  "site_url": "http://localhost:8000",
+  "http_port": 8000,
   "upload_dir": "/tmp",
   "auth": {
     "bcrypt_cost": 10,
