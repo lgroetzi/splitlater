@@ -18,7 +18,7 @@ export default class Login extends React.Component {
     event.preventDefault();
     this.setState({ loading: true });
     try {
-      await authlib.signIn(this.state.email);
+      await authlib.signIn({ email: this.state.email });
       this.setState({ emailSent: true, error: null });
     } catch (error) {
       this.setState({ error: error.message });
