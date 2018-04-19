@@ -8,7 +8,7 @@ services:
       - "15432:5432"
   web:
     build: .
-    command: npm run docker:run
+    command: /usr/src/api/docker/wait-for-db.sh npm run docker:run
     environment:
       NODE_ENV: "docker"
       DEBUG: "email"
@@ -18,3 +18,5 @@ services:
       - "8001:8001"
     depends_on:
       - postgres
+    volumes:
+      - ..:/usr/src/api

@@ -1,0 +1,10 @@
+#!/bin/sh
+[ -z "$1" ] && echo "Usage: $0 {docker-compose command} [params...]" && exit 1
+COMMAND=$1; shift;
+COMMAND_PARAMS=$([ "$COMMAND" = "up" ] && echo "--build")
+SERVICE=web
+PROJECT=splitlater
+exec docker-compose \
+     --file docker/docker-compose.yml \
+     --project-name=${PROJECT} \
+     ${COMMAND} ${COMMAND_PARAMS} ${SERVICE} $@
